@@ -1,0 +1,51 @@
+from pathlib import Path
+R1 = 0
+R2 = 0
+PS = ''
+PC = 0
+TC = 0
+
+def print_table(R1, R2, line, PS, TC, PC):
+    line = line.split("\n")[0]
+    print("IR: |  | " + line)
+    print("R1: |  | " + "101010101010010")
+    print("R2: |  | " + "101010101010010")
+    print("PS: |  | " + str(PS))
+    print("PC: |  | " + str(PC))
+    print("TC: |  | " + str(TC))
+    print()
+
+def func_mov(opperand, R1, R2, PS, TC, PC, line):
+    TC += 1
+    print_table(R1, R2, line, PS, TC, PC)
+    if opperand[0] == "R1":
+        R1 = int(opperand[1])
+    else:
+        R2 = int(opperand[1])
+    TC += 1
+    print_table(R1, R2, line, PS, TC, PC)
+
+
+def func_bitAddMod2(opperand, line, PS, TC, PC):
+    print_table(R1, R2, line, PS, TC, PC)
+    # ///
+    print_table(R1, R2, line, PS, TC, PC)
+    pass
+
+
+
+
+def main(R1, R2, PS, TC, PC):
+    command = ''
+    opperand = ''
+    with open(Path('commands.txt'), encoding = "utf-8", mode = 'r') as file:
+        for line in file:
+            line_ = line.split(" ")
+            command = line_[0]
+            opperand = line_[1].split(",")
+            if command == "mov":
+                func_mov(opperand, R1, R2, PS, TC, PC, line)
+            elif command == "bitAddMod2":
+                func_bitAddMod2(opperand, line, PS, TC, PC)
+
+main(R1, R2, PS, TC, PC)
