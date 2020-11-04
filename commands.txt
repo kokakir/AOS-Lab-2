@@ -1,6 +1,4 @@
 mov R1,-5
-mov R2,8
+mov R2,172
 bm2 R1,R2
-mov R1,39
-mov R2,23
-sub R1,R2
+mov R1,100500

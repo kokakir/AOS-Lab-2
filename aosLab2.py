@@ -9,10 +9,10 @@ import numpy as np
 
 class Processor:
     def __init__ (self):
-        self.n = 14
+        self.n = 22
         self.first_reg = 1
-        self.R1 = '10110110001111'
-        self.R2 = '10011001111000'
+        self.R1 = '1011011000111100111001'
+        self.R2 = '1001100111100001110011'
         self.PS = ''
         self.PC = 0
         self.TC = 0
@@ -37,12 +37,11 @@ class Processor:
                     self.func_mov()
                 elif self.command == "bm2":
                     self.func_bitAddMod2()
-                elif self.command == "sub":
-                    self.func_subtracting()
      
     def info(self):
         print("Лабораторна робота №2")
         print("Киричека Миколи Павловича, К-21")
+        print("Варіант 2.6.6")
     
     def check_par(self):
         if self.first_bit == '0':
@@ -92,94 +91,6 @@ class Processor:
                 else:
                     self.R2[i] = 1
                 
-        self.first_bit = self.R1[0]
-        self.check_par()
-        self.print_table()
-    
-    def func_subtracting(self):
-        input()
-        self.PC += 1
-        self.IR = self.line
-        self.check_par()
-        self.print_table()
-        input()
-        for i in range(self.n):
-            if self.first_reg == 1:
-                if self.R2[i] == '1':
-                    self.R2[i] = '0'
-                else:
-                    self.R2[i] = '1'
-            else:
-                if self.R1[i] == '1':
-                    self.R1[i] = '0'
-                else:
-                    self.R1[i] = '1'
-        
-        if self.first_reg == 1:
-            if self.R2[self.n - 1] == '0':
-                self.R2[self.n - 1] = '1'
-            else:
-                self.R2[self.n - 1] = '0'
-                for j in range(self.n - 1):
-                    if self.R2[self.n - 2 - j] == '0':
-                        self.R2[self.n - 2 - j] = '1'
-                        break
-                    else:
-                        self.R2[self.n - 2 - j] = '0'
-        else:
-            if self.R1[self.n - 1] == '0':
-                self.R1[self.n - 1] = '1'
-            else:
-                self.R1[self.n - 1] = '0'
-                for j in range(self.n - 1):
-                    if self.R1[self.n - 2 - j] == '0':
-                        self.R1[self.n - 2 - j] = '1'
-                        break
-                    else:
-                        self.R1[self.n - 2 - j] = '0'       
-        i = 0
-        while (i < self.n):
-            if self.first_reg == 1:
-                if self.R1[self.n - i - 1] == '0' and self.R2[self.n - i - 1] == '0':
-                    self.R1[self.n - i - 1] = '0'
-                elif self.R1[self.n - i - 1] == '0' and self.R2[self.n - i - 1] == '1':
-                    self.R1[self.n - i - 1] = '1'  
-                elif self.R1[self.n - i - 1] == '1' and self.R2[self.n - i - 1] == '0':
-                    self.R1[self.n - i - 1] = '1'
-                elif self.R1[self.n - i - 1] == '1' and self.R2[self.n - i - 1] == '1':
-                    self.R1[self.n - i - 1] = '0'
-                    for n in range(self.n - i - 1):
-                        if self.R1[self.n - i - 2 - n] == '1' and self.R2[self.n - i - 2 - n] == '1':
-                            self.R1[self.n - i - 2 - n] = '1'
-                        elif self.R1[self.n - i - 2 - n] == '1' and self.R2[self.n - i - 2 - n] == '0':
-                            self.R1[self.n - i - 2 - n] = '0'
-                        elif self.R1[self.n - i - 2 - n] == '0' and self.R2[self.n - i - 2 - n] == '0':
-                            self.R1[self.n - i - 2 - n] = '1'
-                            break
-                        elif self.R1[self.n - i - 2 - n] == '0' and self.R2[self.n - i - 2 - n] == '1':
-                            self.R1[self.n - i - 2 - n] = '0'
-                    i = i + n + 1
-            else:
-                if str(self.R1[self.n - i - 1]) == '0' and str(self.R2[self.n - i - 1]) == '0':
-                    self.R2[self.n - i - 1] = 0
-                elif str(self.R1[self.n - i - 1]) == '0' and str(self.R2[self.n - i - 1]) == '1':
-                    self.R2[self.n - i - 1] = 1
-                elif str(self.R1[self.n - i - 1]) == '1' and str(self.R2[self.n - i - 1]) == '0':
-                    self.R2[self.n - i - 1] = 1  
-                elif str(self.R1[self.n - i - 1]) == '1' and str(self.R2[self.n - i - 1]) == '1':
-                    self.R2[self.n - i - 1] = '0'
-                    for n in range(self.n - i - 1):
-                        if self.R1[self.n - i - 2 - n] == '1' and self.R2[self.n - i - 2 - n] == '1':
-                            self.R2[self.n - i - 2 - n] = '1'
-                        elif self.R1[self.n - i - 2 - n] == '1' and self.R2[self.n - i - 2 - n] == '0':
-                            self.R2[self.n - i - 2 - n] = '0'
-                        elif self.R1[self.n - i - 2 - n] == '0' and self.R2[self.n - i - 2 - n] == '0':
-                            self.R2[self.n - i - 2 - n] = '1'
-                            break
-                        elif self.R1[self.n - i - 2 - n] == '0' and self.R2[self.n - i - 2 - n] == '1':
-                            self.R2[self.n - i - 2 - n] = '0'
-                    i = i + n + 1 
-            i += 1
         self.first_bit = self.R1[0]
         self.check_par()
         self.print_table()
